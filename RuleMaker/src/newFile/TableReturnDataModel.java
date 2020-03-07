@@ -1,23 +1,38 @@
 package newFile;
 
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class TableReturnDataModel {
-	private StringProperty name;
-	private StringProperty type;
+	private SimpleStringProperty name;
+	private SimpleStringProperty type;
 	
-	public TableReturnDataModel(StringProperty name, StringProperty type)
+	public TableReturnDataModel(String name, String type)
 	{
-		this.name = name;
-		this.type = type;
-	}
-
-	public StringProperty nameProperty() {
-		return name;
-	}
-
-	public StringProperty typeProperty() {
-		return type;
+		this.name = new SimpleStringProperty(name);
+		this.type = new SimpleStringProperty(type);
 	}
 	
+	
+	
+	public String getName() {
+		return name.get();
+	}
+
+
+
+	public void setName(String name) {
+		this.name.set(name);
+	}
+
+
+
+	public String getType() {
+		return type.get();
+	}
+
+
+
+	public void setType(String type) {
+		this.type.set(type); 
+	}
 }
