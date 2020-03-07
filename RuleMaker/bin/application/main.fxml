@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" fx:controller="application.RootController" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <MenuBar>
+		<menus>
+			<Menu text="파일">
+				<items>
+					<MenuItem text="새로만들기" onAction="#handleNew" >
+						<accelerator>
+							<KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+						</accelerator>
+						<graphic>
+							<ImageView><image><Image url="@icons/new.png" /></image></ImageView>
+						</graphic>
+					</MenuItem>
+					<MenuItem text="열기"  onAction="#handleOpen" >
+						<accelerator>
+							<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+						</accelerator>
+						<graphic>
+							<ImageView><image><Image url="@icons/open.png" /></image></ImageView>
+						</graphic>
+					</MenuItem>
+					<MenuItem text="저장" onAction="#handleSave" >
+						<accelerator>
+							<KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+						</accelerator>
+						<graphic>
+							<ImageView><image> <Image url="@icons/save.png" /></image> </ImageView>
+						</graphic>                     
+					</MenuItem>
+					<SeparatorMenuItem />
+					<MenuItem text="끝내기" onAction="#handleExit"/>
+				</items>
+			</Menu>
+		</menus>
+	</MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
