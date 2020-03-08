@@ -3,7 +3,7 @@ package newFile;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.SimpleStringProperty;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,45 +12,73 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 
 public class newFileController implements Initializable{
+	/**
+	 * return 테이블
+	 */
 	@FXML
 	private TableView<TableReturnDataModel> returnTable;
-	
 	@FXML
-	private TableColumn<TableReturnDataModel, String> nameColumn;
-	
+	private TableColumn<TableReturnDataModel, String> rtnNameColumn;
 	@FXML
-	private TableColumn<TableReturnDataModel, String> typeColumn;
-	
+	private TableColumn<TableReturnDataModel, String> rtnTypeColumn;
+	@FXML
+	private TableColumn<TableReturnDataModel, Boolean> rtnCheckColumn;
 	@FXML
 	private Button rtnAdd;
-	
 	@FXML
 	private Button rtnDel;
 	
+	/**
+	 * input 테이블
+	 */
+	@FXML
+	private TableView<TableInputDataModel> inputTable;
+	@FXML
+	private TableColumn<TableInputDataModel, String> iptNameColumn;
+	@FXML
+	private TableColumn<TableInputDataModel, String> iptTypeColumn;
+	@FXML
+	private TableColumn<TableInputDataModel, Boolean> iptCheckColumn;
+	@FXML
+	private Button iptAdd;
+	@FXML
+	private Button iptDel;
 	
+	/**
+	 * 저장, 취소버튼
+	 */
+	@FXML
+	private Button save;
 	
+	@FXML
+	private Button cancel;
 	
 	private final ObservableList<TableReturnDataModel> returnList =
             FXCollections.observableArrayList(
-            		new TableReturnDataModel("name","String"));
+            		new TableReturnDataModel("name","String", false));
 	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
+	private final ObservableList<TableInputDataModel> inputList =
+            FXCollections.observableArrayList(
+            		new TableInputDataModel("name","String", false));
+	
+	
+	
+	void rtnTableSetConfig() {
 		returnTable.setEditable(true);
-		
-		nameColumn.setMinWidth(150);
-		nameColumn.setCellValueFactory(
+		rtnNameColumn.setMinWidth(150);
+		rtnNameColumn.setCellValueFactory(
 	            new PropertyValueFactory<TableReturnDataModel, String>("name"));
-		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-		nameColumn.setOnEditCommit(
+		rtnNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		rtnNameColumn.setOnEditCommit(
             new EventHandler<CellEditEvent<TableReturnDataModel, String>>() {
                 @Override
                 public void handle(CellEditEvent<TableReturnDataModel, String> t) {
@@ -61,11 +89,11 @@ public class newFileController implements Initializable{
             }
         );
 		 
-		typeColumn.setMinWidth(120);
-		typeColumn.setCellValueFactory(
+		rtnTypeColumn.setMinWidth(120);
+		rtnTypeColumn.setCellValueFactory(
 	            new PropertyValueFactory<TableReturnDataModel, String>("type"));
-		typeColumn.setCellFactory(ComboBoxTableCell.forTableColumn("String", "Integer", "Double"));
-		typeColumn.setOnEditCommit(
+		rtnTypeColumn.setCellFactory(ComboBoxTableCell.forTableColumn("String", "Integer", "Double"));
+		rtnTypeColumn.setOnEditCommit(
             new EventHandler<CellEditEvent<TableReturnDataModel, String>>() {
                 @Override
                 public void handle(CellEditEvent<TableReturnDataModel, String> t) {
@@ -76,22 +104,131 @@ public class newFileController implements Initializable{
             }
         );
 		
+		rtnCheckColumn.setMinWidth(50);
+		rtnCheckColumn.setCellValueFactory(param -> param.getValue().getCheck());
+		rtnCheckColumn.setCellFactory( CheckBoxTableCell.forTableColumn(rtnCheckColumn));
+		
 		returnTable.setItems(returnList);
 		
 		rtnAdd.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				returnList.add(new TableReturnDataModel("abcd", "11"));
-				System.out.println("1111111111111");
+				Platform.runLater(()-> {
+					returnList.add(new TableReturnDataModel("name", "String", false));
+				});
 			}
 		});
 		
+		rtnDel.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				for (TableReturnDataModel tableReturnDataModel : returnList) {
+					if ( tableReturnDataModel.getCheck().get() == true ) {
+						Platform.runLater(()-> {
+							returnList.remove(tableReturnDataModel);
+						});
+					}
+				}
+			}
+		});
+	}
+	void iptTableSetConfig() {
+		inputTable.setEditable(true);
+		iptNameColumn.setMinWidth(150);
+		iptNameColumn.setCellValueFactory(
+	            new PropertyValueFactory<TableInputDataModel, String>("name"));
+		iptNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		iptNameColumn.setOnEditCommit(
+            new EventHandler<CellEditEvent<TableInputDataModel, String>>() {
+                @Override
+                public void handle(CellEditEvent<TableInputDataModel, String> t) {
+                    ((TableInputDataModel) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setName( (t.getNewValue()));
+                }
+            }
+        );
+		 
+		iptTypeColumn.setMinWidth(120);
+		iptTypeColumn.setCellValueFactory(
+	            new PropertyValueFactory<TableInputDataModel, String>("type"));
+		iptTypeColumn.setCellFactory(ComboBoxTableCell.forTableColumn("String", "Integer", "Double"));
+		iptTypeColumn.setOnEditCommit(
+            new EventHandler<CellEditEvent<TableInputDataModel, String>>() {
+                @Override
+                public void handle(CellEditEvent<TableInputDataModel, String> t) {
+                    ((TableInputDataModel) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                        ).setName( (t.getNewValue()));
+                }
+            }
+        );
+		
+		iptCheckColumn.setMinWidth(50);
+		iptCheckColumn.setCellValueFactory(param -> param.getValue().getCheck());
+		iptCheckColumn.setCellFactory( CheckBoxTableCell.forTableColumn(iptCheckColumn));
+		
+		inputTable.setItems(inputList);
+		
+		iptAdd.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				Platform.runLater(()-> {
+					inputList.add(new TableInputDataModel("name", "String", false));
+				});
+			}
+		});
+		
+		iptDel.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@SuppressWarnings("unlikely-arg-type")
+			@Override
+			public void handle(ActionEvent event) {
+				for (TableInputDataModel tableInputDataModel : inputList) {
+					if ( tableInputDataModel.getCheck().get() == true ) {
+						Platform.runLater(()-> {
+							inputList.remove(tableInputDataModel);
+						});
+					}
+				}
+			}
+		});
+	}
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		rtnTableSetConfig();
+		iptTableSetConfig();
+		
+		cancel.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				handleBtnExitAction(event);
+			}
+		});
+		
+		save.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		// TODO Auto-generated method stub
 //		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
 //		typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
 	}
 	
+	public void handleBtnExitAction(ActionEvent e) { // 취소 버튼
+		Stage stage = (Stage) cancel.getScene().getWindow();
+		stage.close();
+	}
+	@FXML
+	public void exitApplication(ActionEvent event) {
+		handleBtnExitAction(null);
+	}
 	
 }

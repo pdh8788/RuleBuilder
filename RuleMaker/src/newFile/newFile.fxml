@@ -13,9 +13,9 @@
          <children>
             <TableView fx:id="returnTable" editable="true" layoutX="28.0" layoutY="100.0" prefHeight="484.0" prefWidth="410.0">
               <columns>
-                 <TableColumn fx:id="nameColumn" prefWidth="149.59996950626373" sortable="false" text="컬럼명" />
-                <TableColumn fx:id="typeColumn" prefWidth="148.800048828125" sortable="false" text="자료형" />
-                  <TableColumn prefWidth="149.59996950626373" sortable="false" text="선택여부" />
+                 <TableColumn fx:id="rtnNameColumn" prefWidth="149.59996950626373" sortable="false" text="컬럼명" />
+                <TableColumn fx:id="rtnTypeColumn" prefWidth="148.800048828125" sortable="false" text="자료형" />
+                  <TableColumn fx:id="rtnCheckColumn" prefWidth="149.59996950626373" sortable="false" text="선택여부" />
               </columns>
                <opaqueInsets>
                   <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
@@ -26,9 +26,9 @@
             </TableView>
             <TableView fx:id="inputTable" editable="true" layoutX="476.0" layoutY="100.0" prefHeight="484.0" prefWidth="398.0">
               <columns>
-                <TableColumn prefWidth="149.59996950626373" sortable="false" text="컬럼명" />
-                <TableColumn prefWidth="148.800048828125" sortable="false" text="자료형" />
-                  <TableColumn prefWidth="149.59996950626373" sortable="false" text="선택여부" />
+                <TableColumn fx:id="iptNameColumn" prefWidth="149.59996950626373" sortable="false" text="컬럼명" />
+                <TableColumn fx:id="iptTypeColumn" prefWidth="148.800048828125" sortable="false" text="자료형" />
+                  <TableColumn fx:id="iptCheckColumn" prefWidth="149.59996950626373" sortable="false" text="선택여부" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -38,8 +38,8 @@
             <Button fx:id="rtnDel" layoutX="386.0" layoutY="59.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="52.0" text="삭제" />
             <Button fx:id="save" layoutX="782.0" layoutY="14.0" mnemonicParsing="false" text="저장" />
             <Button fx:id="cancel" layoutX="835.0" layoutY="14.0" mnemonicParsing="false" text="취소" />
-            <Button fx:id="iptadd" layoutX="768.0" layoutY="59.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="52.0" text="추가" />
-            <Button fx:id="iptdel" layoutX="824.0" layoutY="59.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="52.0" text="삭제" />
+            <Button fx:id="iptAdd" layoutX="768.0" layoutY="59.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="52.0" text="추가" />
+            <Button fx:id="iptDel" layoutX="824.0" layoutY="59.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="52.0" text="삭제" />
          </children>
       </AnchorPane>
    </children>

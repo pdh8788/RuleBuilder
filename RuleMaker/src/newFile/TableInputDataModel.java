@@ -4,12 +4,12 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 
-public class TableReturnDataModel {
+public class TableInputDataModel {
 	private SimpleStringProperty name;
 	private SimpleStringProperty type;
 	private SimpleBooleanProperty check;
 	
-	public TableReturnDataModel(String name, String type, Boolean check)
+	public TableInputDataModel(String name, String type, Boolean check)
 	{
 		this.name = new SimpleStringProperty(name);
 		this.type = new SimpleStringProperty(type);
