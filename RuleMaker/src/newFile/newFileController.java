@@ -14,9 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import newFile.testTable.Person;
 
 public class newFileController implements Initializable{
 	@FXML
@@ -39,7 +39,7 @@ public class newFileController implements Initializable{
 	
 	private final ObservableList<TableReturnDataModel> returnList =
             FXCollections.observableArrayList(
-            		new TableReturnDataModel("name1","type1"));
+            		new TableReturnDataModel("name","String"));
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -64,7 +64,7 @@ public class newFileController implements Initializable{
 		typeColumn.setMinWidth(120);
 		typeColumn.setCellValueFactory(
 	            new PropertyValueFactory<TableReturnDataModel, String>("type"));
-		typeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		typeColumn.setCellFactory(ComboBoxTableCell.forTableColumn("String", "Integer", "Double"));
 		typeColumn.setOnEditCommit(
             new EventHandler<CellEditEvent<TableReturnDataModel, String>>() {
                 @Override
