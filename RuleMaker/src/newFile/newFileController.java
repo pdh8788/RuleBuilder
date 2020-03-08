@@ -1,8 +1,11 @@
 package newFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import common.loadSaveRuleData;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +25,7 @@ import javafx.stage.Stage;
 
 public class newFileController implements Initializable{
 	/**
-	 * return Å×ÀÌºí
+	 * return í…Œì´ë¸”
 	 */
 	@FXML
 	private TableView<TableReturnDataModel> returnTable;
@@ -38,7 +41,7 @@ public class newFileController implements Initializable{
 	private Button rtnDel;
 	
 	/**
-	 * input Å×ÀÌºí
+	 * input í…Œì´ë¸”
 	 */
 	@FXML
 	private TableView<TableInputDataModel> inputTable;
@@ -54,7 +57,7 @@ public class newFileController implements Initializable{
 	private Button iptDel;
 	
 	/**
-	 * ÀúÀå, Ãë¼Ò¹öÆ°
+	 * ì €ì¥, ì·¨ì†Œ ë²„íŠ¼
 	 */
 	@FXML
 	private Button save;
@@ -99,7 +102,7 @@ public class newFileController implements Initializable{
                 public void handle(CellEditEvent<TableReturnDataModel, String> t) {
                     ((TableReturnDataModel) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
-                        ).setName( (t.getNewValue()));
+                        ).setType((t.getNewValue()));
                 }
             }
         );
@@ -161,7 +164,7 @@ public class newFileController implements Initializable{
                 public void handle(CellEditEvent<TableInputDataModel, String> t) {
                     ((TableInputDataModel) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
-                        ).setName( (t.getNewValue()));
+                        ).setType( (t.getNewValue()));
                 }
             }
         );
@@ -197,6 +200,8 @@ public class newFileController implements Initializable{
 			}
 		});
 	}
+	
+	loadSaveRuleData method = loadSaveRuleData.getInstance();
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		rtnTableSetConfig();
@@ -213,7 +218,19 @@ public class newFileController implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
+				File saveFolder = new File("C:\\saveFiles");
 				
+				if( !saveFolder.exists()) {
+					try {
+						saveFolder.mkdir();
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				File saveFile = new File("C:\\saveFiles\\save.xml");
+				method.saveRuleDataFromFile( saveFile , null);
+//				method.saveRuleDataFromFile(file, wrapper);
 			}
 		});
 		
@@ -222,7 +239,7 @@ public class newFileController implements Initializable{
 //		typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
 	}
 	
-	public void handleBtnExitAction(ActionEvent e) { // Ãë¼Ò ¹öÆ°
+	public void handleBtnExitAction(ActionEvent e) { 
 		Stage stage = (Stage) cancel.getScene().getWindow();
 		stage.close();
 	}
