@@ -60,7 +60,7 @@ public class newFileController implements Initializable{
                 }
             }
         );
-		
+		 
 		typeColumn.setMinWidth(120);
 		typeColumn.setCellValueFactory(
 	            new PropertyValueFactory<TableReturnDataModel, String>("type"));
