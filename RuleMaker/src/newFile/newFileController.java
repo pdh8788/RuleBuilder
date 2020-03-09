@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import common.RuleWrapper;
 import common.loadSaveRuleData;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -22,6 +23,8 @@ import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import model.TableInputDataModel;
+import model.TableReturnDataModel;
 
 public class newFileController implements Initializable{
 	/**
@@ -229,7 +232,10 @@ public class newFileController implements Initializable{
 					}
 				}
 				File saveFile = new File("C:\\saveFiles\\save.xml");
-				method.saveRuleDataFromFile( saveFile , null);
+				
+				RuleWrapper rule = new RuleWrapper(inputList, returnList);
+				
+				method.saveRuleDataFromFile( saveFile , rule);
 //				method.saveRuleDataFromFile(file, wrapper);
 			}
 		});

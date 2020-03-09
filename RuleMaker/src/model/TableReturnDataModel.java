@@ -1,15 +1,23 @@
-package newFile;
+package model;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 
-public class TableInputDataModel {
+public class TableReturnDataModel {
 	private SimpleStringProperty name;
 	private SimpleStringProperty type;
 	private SimpleBooleanProperty check;
 	
-	public TableInputDataModel(String name, String type, Boolean check)
+	public TableReturnDataModel() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public TableReturnDataModel(String name, String type, Boolean check)
 	{
 		this.name = new SimpleStringProperty(name);
 		this.type = new SimpleStringProperty(type);
@@ -17,7 +25,7 @@ public class TableInputDataModel {
 	}
 	
 	
-	
+	@XmlElement(name ="name")
 	public String getName() {
 		return name.get();
 	}
@@ -29,7 +37,7 @@ public class TableInputDataModel {
 	}
 
 
-
+	@XmlElement(name ="type")
 	public String getType() {
 		return type.get();
 	}
@@ -40,7 +48,8 @@ public class TableInputDataModel {
 		this.type.set(type); 
 	}
 	
-	public ObservableBooleanValue getCheck() {
+	@XmlElement(name ="check")
+	public SimpleBooleanProperty getCheck() {
 		return check;
 	}
 	

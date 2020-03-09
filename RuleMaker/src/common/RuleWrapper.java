@@ -3,10 +3,12 @@ package common;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import newFile.TableInputDataModel;
-import newFile.TableReturnDataModel;
+import model.TableInputDataModel;
+import model.TableReturnDataModel;
+import model.TableRuleDataModel;
 
 /**
  * 
@@ -20,15 +22,31 @@ public class RuleWrapper {
 	private List<TableInputDataModel> tableInputDataModelList;
 	
 	private List<TableReturnDataModel> tableReturnDataModelList;
-
-	@XmlElement(name ="tableInputDataModel")
+	
+//	private List<TableRuleDataModel> tableRuleDataModelList;
+	
 	public List<TableInputDataModel> getTableInputDataModelList() {
 		return tableInputDataModelList;
 	}
-	
-	@XmlElement(name ="tableReturnDataModel")
+
 	public List<TableReturnDataModel> getTableReturnDataModelList() {
 		return tableReturnDataModelList;
+	}
+	
+	@XmlElementWrapper(name="tableInputDataModelList")
+	@XmlElement(name ="tableInputDataModel")
+	public void setTableInputDataModelList(List<TableInputDataModel> tableInputDataModelList) {
+		this.tableInputDataModelList = tableInputDataModelList;
+	}
+	
+	@XmlElementWrapper(name="tableReturnDataModelList")
+	@XmlElement(name ="tableReturnDataModel")
+	public void setTableReturnDataModelList(List<TableReturnDataModel> tableReturnDataModelList) {
+		this.tableReturnDataModelList = tableReturnDataModelList;
+	}
+
+	public RuleWrapper() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	public RuleWrapper(List<TableInputDataModel> tableInputDataModelList, List<TableReturnDataModel> tableReturnDataModelList ) {
