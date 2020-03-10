@@ -9,18 +9,26 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ruleFile.ruleFileController">
    <children>
-      <AnchorPane prefHeight="601.0" prefWidth="900.0">
+      <AnchorPane prefHeight="634.0" prefWidth="900.0">
          <children>
-            <TableView fx:id="ruleTable" editable="true" layoutX="28.0" layoutY="71.0" prefHeight="514.0" prefWidth="845.0">
+            <TableView fx:id="ruleTable" editable="true" layoutX="28.0" layoutY="105.0" prefHeight="480.0" prefWidth="846.0">
                <opaqueInsets>
                   <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
                </opaqueInsets>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <columns>
+                  <TableColumn fx:id="result" prefWidth="149.59996950626373" sortable="false" text="리턴결과" />
+                  <TableColumn fx:id="explain" prefWidth="212.00006103515625" sortable="false" text="설명" />
+                  <TableColumn fx:id="column1" prefWidth="209.60000610351562" sortable="false" text="amount" />
+                  <TableColumn fx:id="column2" prefWidth="149.59996950626373" sortable="false" text="countryCode" />
+               </columns>
             </TableView>
             <Button fx:id="save" layoutX="764.0" layoutY="14.0" mnemonicParsing="false" text="저장" />
             <Button fx:id="commit" layoutX="817.0" layoutY="14.0" mnemonicParsing="false" text="commit" />
+            <Button fx:id="add" layoutX="764.0" layoutY="63.0" mnemonicParsing="false" text="추가" />
+            <Button fx:id="del" layoutX="817.0" layoutY="63.0" mnemonicParsing="false" text="삭제" />
          </children>
       </AnchorPane>
    </children>
