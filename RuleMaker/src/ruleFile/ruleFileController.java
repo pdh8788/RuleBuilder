@@ -137,7 +137,6 @@ public class ruleFileController implements Initializable{
 		
 		del.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@SuppressWarnings("unlikely-arg-type")
 			@Override
 			public void handle(ActionEvent event) {
 				if ( returnList.size() > 0 ) {

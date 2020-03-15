@@ -1,11 +1,18 @@
 package prototype;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import common.loadSaveRuleData;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +21,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -109,6 +115,24 @@ public class protoController implements Initializable{
 		
 	}
 	
+	public String parseJSONData(BufferedReader bufferedReader) {
+		String resultSet = null;
+		
+		try {
+			 JSONParser jsonParser = new JSONParser();
+			 Object obj = jsonParser.parse(bufferedReader);
+			 JSONArray array = new JSONArray();
+			 array.add(obj);
+				 
+			 resultSet = array.toJSONString();
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resultSet;
+	}
+	
 	loadSaveRuleData method = loadSaveRuleData.getInstance();
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -117,10 +141,48 @@ public class protoController implements Initializable{
 		
 		lookUp.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@SuppressWarnings("unlikely-arg-type")
 			@Override
 			public void handle(ActionEvent event) {
+				try {
+					URL url = new URL("http://localhost:8080/ruleBuilder/protoType");
+					HttpURLConnection conn = null;
+					JSONObject responseJson = null;
+					conn = (HttpURLConnection) url.openConnection();
+					
+					
+					conn.setRequestMethod("GET");
+//					conn.setRequestProperty("X-AUTH-Token", this.token);
+					conn.setRequestProperty("Content-Type", "application/json");
+					
+					//request에 JSON data 준비
+					conn.setDoOutput(true);
+					
+					//commands라는 JSONArray를 담을 JSONObject 생성
+//					JSONObject commands = new JSONObject();
+//					commands.put("commands", value);
+//					bw.write(commands.toString());
+					
+					int responseCode = conn.getResponseCode();
+					if(responseCode == 400) {
+						System.out.println("400:: 해당 명령을 실행할 수 없음");
+					} else if (responseCode == 401) {
+						System.out.println("401:: X-Auth-Token Header가 잘못됨");
+					} else if (responseCode == 500) {
+						System.out.println("500:: 서버 에러");
+					} else {
+						BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+						String result = parseJSONData(br);
+						System.out.println(result);
+					}
+					
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO: handle exception
+				}
 				
+//				parser.json
 			}
 		});
 		

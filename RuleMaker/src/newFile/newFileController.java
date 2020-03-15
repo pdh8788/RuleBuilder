@@ -28,7 +28,7 @@ import model.TableReturnDataModel;
 
 public class newFileController implements Initializable{
 	/**
-	 * return 테이블
+	 * return �뀒�씠釉�
 	 */
 	@FXML
 	private TableView<TableReturnDataModel> returnTable;
@@ -44,7 +44,7 @@ public class newFileController implements Initializable{
 	private Button rtnDel;
 	
 	/**
-	 * input 테이블
+	 * input �뀒�씠釉�
 	 */
 	@FXML
 	private TableView<TableInputDataModel> inputTable;
@@ -60,7 +60,7 @@ public class newFileController implements Initializable{
 	private Button iptDel;
 	
 	/**
-	 * 저장, 취소 버튼
+	 * ���옣, 痍⑥냼 踰꾪듉
 	 */
 	@FXML
 	private Button save;
@@ -190,7 +190,6 @@ public class newFileController implements Initializable{
 		
 		iptDel.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@SuppressWarnings("unlikely-arg-type")
 			@Override
 			public void handle(ActionEvent event) {
 				for (TableInputDataModel tableInputDataModel : inputList) {
