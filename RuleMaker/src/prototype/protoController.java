@@ -3,6 +3,7 @@ package prototype;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -71,9 +72,10 @@ public class protoController implements Initializable{
 	
 	private final ObservableList<protoModel> list =
             FXCollections.observableArrayList(
-            		new protoModel("홍길동","910821-111111", "010-1111-1111","서울시 영등포구 당산로 314-12")
-            		, new protoModel("박나리","880821-111111", "010-2222-1111","인천광역시 서구 웅진로 211-14")
-            		, new protoModel("김진수","780821-111111", "010-3333-1111","서울특별시 동작구 동작로 111-1"));
+            		new protoModel("1","홍길동","910821-111111", "010-1111-1111","서울시 영등포구 당산로 314-12")
+            		, new protoModel("2","박나리","880821-111111", "010-2222-1111","인천광역시 서구 웅진로 211-14")
+            		, new protoModel("3","김진수","780821-111111", "010-3333-1111","서울특별시 동작구 동작로 111-1")
+            		);
 	
 	public void setConfig() {
 		table.setEditable(false);
@@ -115,22 +117,25 @@ public class protoController implements Initializable{
 		
 	}
 	
-	public String parseJSONData(BufferedReader bufferedReader) {
-		String resultSet = null;
-		
+	public void parseJSONData(BufferedReader bufferedReader) {
+		Object obj = null;
+		JSONArray array = new JSONArray();
 		try {
 			 JSONParser jsonParser = new JSONParser();
-			 Object obj = jsonParser.parse(bufferedReader);
-			 JSONArray array = new JSONArray();
-			 array.add(obj);
-				 
-			 resultSet = array.toJSONString();
+			 array = (JSONArray) jsonParser.parse(bufferedReader);
+			 
+			 for (int i = 0; i < array.size(); i++) {
+				 JSONObject tempObj = (JSONObject)array.get(i);
+				 list.add(new protoModel(tempObj.get("employeeNo").toString(), tempObj.get("name").toString(), tempObj.get("personId").toString() , 
+						 tempObj.get("number").toString() , tempObj.get("address").toString() ));
+			}
+			 
+//			 resultSet = array.toJSONString();
 			 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return resultSet;
+//		return array;
 	}
 	
 	loadSaveRuleData method = loadSaveRuleData.getInstance();
@@ -171,8 +176,8 @@ public class protoController implements Initializable{
 						System.out.println("500:: 서버 에러");
 					} else {
 						BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-						String result = parseJSONData(br);
-						System.out.println(result);
+						list.remove(0, list.size()-1);
+						parseJSONData(br);
 					}
 					
 				} catch (MalformedURLException e) {
@@ -182,18 +187,65 @@ public class protoController implements Initializable{
 					// TODO: handle exception
 				}
 				
-//				parser.json
 			}
 		});
 		
 		save.setOnAction(new EventHandler<ActionEvent>() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-			}
-		});
-		
-		
+				try {
+					URL url = new URL("http://localhost:8080/ruleBuilder/protoType");
+					HttpURLConnection conn = null;
+					JSONObject responseJson = null;
+					conn = (HttpURLConnection) url.openConnection();
+					
+					conn.setRequestMethod("PUT");
+//					conn.setRequestProperty("X-AUTH-Token", this.token);
+					conn.setRequestProperty("Content-Type", "application/json");
+					
+					
+					//request에 JSON data 준비
+					conn.setDoOutput(true);
+					//String employeeNum, String name, String personId, String number, String address
+
+					protoModel model = (protoModel)table.getSelectionModel().getSelectedItem();
+					JSONObject object = new JSONObject();
+					object.put("employeeNo", model.getEmployeeNum());
+					object.put("name", nameDetail.getText());
+					object.put("personId", idDetail.getText());
+					object.put("number", numberDetail.getText());
+					object.put("address",  addressDetail.getText());
+					
+					System.out.println(object.toJSONString());
+					
+			        OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+			        out.write(object.toJSONString());
+			        out.close();
+					
+					int responseCode = conn.getResponseCode();
+					if(responseCode == 400) {
+						System.out.println("400:: 해당 명령을 실행할 수 없음");
+					} else if (responseCode == 401) {
+						System.out.println("401:: X-Auth-Token Header가 잘못됨");
+					} else if (responseCode == 500) {
+						System.out.println("500:: 서버 에러");
+					} else {
+						BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+						System.out.println(br);
+						
+					}
+					
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				} catch ( Exception e ) {
+					e.printStackTrace();
+				}
+		}});
 	}
 	
 	public void handleBtnExitAction(ActionEvent e) { 

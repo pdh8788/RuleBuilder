@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javafx.beans.property.SimpleStringProperty;
 
 public class protoModel {
-	
+	private SimpleStringProperty employeeNum;
 	private SimpleStringProperty name;
 	private SimpleStringProperty personId;
 	private SimpleStringProperty number;
@@ -15,14 +15,22 @@ public class protoModel {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public protoModel(String name, String personId, String number, String address) {
+	public protoModel(String employeeNum, String name, String personId, String number, String address) {
+		this.employeeNum = new SimpleStringProperty(employeeNum);
 		this.name = new SimpleStringProperty(name);
 		this.personId = new SimpleStringProperty(personId);
 		this.number = new SimpleStringProperty(number);
 		this.address = new SimpleStringProperty(address);
-		
 	}
 	
+	public String getEmployeeNum() {
+		return employeeNum.get();
+	}
+
+	@XmlElement(name ="name")
+	public void setEmployeeNum(String employeeNum) {
+		this.employeeNum.set(employeeNum);
+	}
 	
 	public String getName() {
 		return name.get();
