@@ -17,6 +17,7 @@ import common.loadSaveRuleData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -72,9 +73,9 @@ public class protoController implements Initializable{
 	
 	private final ObservableList<protoModel> list =
             FXCollections.observableArrayList(
-            		new protoModel("1","홍길동","910821-111111", "010-1111-1111","서울시 영등포구 당산로 314-12")
-            		, new protoModel("2","박나리","880821-111111", "010-2222-1111","인천광역시 서구 웅진로 211-14")
-            		, new protoModel("3","김진수","780821-111111", "010-3333-1111","서울특별시 동작구 동작로 111-1")
+//            		new protoModel("1","홍길동","910821-111111", "010-1111-1111","서울시 영등포구 당산로 314-12")
+//            		, new protoModel("2","박나리","880821-111111", "010-2222-1111","인천광역시 서구 웅진로 211-14")
+//            		, new protoModel("3","김진수","780821-111111", "010-3333-1111","서울특별시 동작구 동작로 111-1")
             		);
 	
 	public void setConfig() {
@@ -91,6 +92,12 @@ public class protoController implements Initializable{
                 	addressDetail.setText(rowData.getAddress());
                 }
             });
+            
+            nameDetail.setEditable(true);
+            idDetail.setEditable(true);
+            numberDetail.setEditable(true);
+            addressDetail.setEditable(true);
+            
             return row ;
         });
 		
@@ -114,6 +121,7 @@ public class protoController implements Initializable{
 		addressCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		
 		table.setItems(list);
+		
 		
 	}
 	
@@ -176,7 +184,7 @@ public class protoController implements Initializable{
 						System.out.println("500:: 서버 에러");
 					} else {
 						BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-						list.remove(0, list.size()-1);
+						list.remove(0, list.size());
 						parseJSONData(br);
 					}
 					
@@ -195,6 +203,13 @@ public class protoController implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					protoModel model = (protoModel)table.getSelectionModel().getSelectedItem();
+					
+					if( model == null || model.getEmployeeNum().equals("") )
+					{
+						return;
+					}
+					
 					URL url = new URL("http://localhost:8080/ruleBuilder/protoType");
 					HttpURLConnection conn = null;
 					JSONObject responseJson = null;
@@ -209,7 +224,6 @@ public class protoController implements Initializable{
 					conn.setDoOutput(true);
 					//String employeeNum, String name, String personId, String number, String address
 
-					protoModel model = (protoModel)table.getSelectionModel().getSelectedItem();
 					JSONObject object = new JSONObject();
 					object.put("employeeNo", model.getEmployeeNum());
 					object.put("name", nameDetail.getText());
@@ -233,9 +247,7 @@ public class protoController implements Initializable{
 					} else {
 						BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 						System.out.println(br);
-						
 					}
-					
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

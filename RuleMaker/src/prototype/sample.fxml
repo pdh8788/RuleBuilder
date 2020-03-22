@@ -103,10 +103,10 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="nameDetail" layoutX="66.0" layoutY="13.0" />
-                  <TextField fx:id="addressDetail" layoutX="66.0" layoutY="61.0" prefHeight="22.0" prefWidth="637.0" />
-                  <TextField fx:id="idDetail" layoutX="416.0" layoutY="13.0" prefHeight="22.0" prefWidth="196.0" />
-                  <TextField fx:id="numberDetail" layoutX="747.0" layoutY="13.0" prefHeight="22.0" prefWidth="242.0" />
+                  <TextField fx:id="nameDetail" editable="false" layoutX="66.0" layoutY="13.0" />
+                  <TextField fx:id="addressDetail" editable="false" layoutX="66.0" layoutY="61.0" prefHeight="22.0" prefWidth="637.0" />
+                  <TextField fx:id="idDetail" editable="false" layoutX="416.0" layoutY="13.0" prefHeight="22.0" prefWidth="196.0" />
+                  <TextField fx:id="numberDetail" editable="false" layoutX="747.0" layoutY="13.0" prefHeight="22.0" prefWidth="242.0" />
                </children>
             </Pane>
          </children>
