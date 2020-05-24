@@ -16,7 +16,11 @@ public class mainProto extends Application {
 //			BorderPane root = new BorderPane();
 //			Scene scene = new Scene(root,400,400);
 //			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
+			System.out.println("111111111111111111111");
+			System.out.println("111111111111111111111");
+			System.out.println("111111111111111111111");
+			System.out.println("111111111111111111111");
+			System.out.println("111111111111111111111");
 			Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 			Scene scene = new Scene(root);
 

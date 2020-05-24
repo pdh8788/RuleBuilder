@@ -122,6 +122,8 @@ public class protoController implements Initializable{
 		
 		table.setItems(list);
 		
+		System.out.println();
+		
 		
 	}
 	
@@ -146,7 +148,6 @@ public class protoController implements Initializable{
 //		return array;
 	}
 	
-	loadSaveRuleData method = loadSaveRuleData.getInstance();
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
