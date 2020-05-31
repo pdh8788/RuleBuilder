@@ -213,7 +213,6 @@ public class protoController implements Initializable{
 					
 					URL url = new URL("http://localhost:8080/ruleBuilder/protoType");
 					HttpURLConnection conn = null;
-					JSONObject responseJson = null;
 					conn = (HttpURLConnection) url.openConnection();
 					
 					conn.setRequestMethod("PUT");

@@ -1,14 +1,24 @@
-package prototype;
+package ruleMaker;
 	
+import java.io.File;
+import java.util.prefs.Preferences;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 
-public class mainProto extends Application {
+
+public class launcher extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -16,10 +26,11 @@ public class mainProto extends Application {
 //			BorderPane root = new BorderPane();
 //			Scene scene = new Scene(root,400,400);
 //			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+			
+			Parent root = FXMLLoader.load(getClass().getResource("ruleMaker.fxml"));
 			Scene scene = new Scene(root);
 
-			primaryStage.setTitle("sample");
+			primaryStage.setTitle("RuleMaker");
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -31,4 +42,5 @@ public class mainProto extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }
